@@ -18,7 +18,12 @@ class UserController extends AbstractController
     #[Route('/api/secure', name: 'api_secure', methods: ['GET'])]
     public function secure(): JsonResponse
     {
-        return new JsonResponse(['message' => 'This is a secured endpoint']);
+        return new JsonResponse(['message' => 'This is a secured endpoint and cannot be accesed without the token ']);
+    }
+    #[Route('/api/secure/user', name: 'api_secure', methods: ['GET'])]
+    public function secureUser(): JsonResponse
+    {
+        return new JsonResponse(['message' => 'This is a secured endpoint and cannot be accesed without the token ']);
     }
     #[Route('/', name: 'app_user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response

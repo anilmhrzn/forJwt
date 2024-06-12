@@ -27,17 +27,13 @@ class AuthController extends AbstractController
         $data = json_decode($request->getContent(), true);
         $username = $request->request->get('username') ;
         $password = $request->request->get('password');
-//        return new JsonResponse(['username' =>$username,"password",$password ], 401);
-
         $userRepository = $this->entityManager->getRepository(User::class);
         $user = $userRepository->findOneBy(['username' => $username]);
 
         if (!$user || $user->getPassword() !== $password) {
             return new JsonResponse(['error' => 'Invalid credentials'], 401);
         }
-
         $token = $this->jwtService->createToken(['username' => $user->getUsername(), 'exp' => time() + 3600]);
-
         return new JsonResponse(['token' => $token]);
     }
 }
